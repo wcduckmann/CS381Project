@@ -117,7 +117,7 @@ void GfxMgr::MakeGround(){
 	    Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 	    //plane,
 		oceanSurface,
-	    20000, 10000, 20, 20,
+	    1000, 2000, 20, 20,
 	    true,
 	    1, 5, 5,
 	    Ogre::Vector3::UNIT_Z);

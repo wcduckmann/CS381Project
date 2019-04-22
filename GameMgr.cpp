@@ -61,15 +61,15 @@ void GameMgr::LoadLevel(){
 }
 
 void GameMgr::MakeEntities(){
-	Ogre::Vector3 pos = Ogre::Vector3(-1000, 0, 100);
+	Ogre::Vector3 pos = Ogre::Vector3(-400, 0, 250);
 	engine->entityMgr->CreateEntityOfTypeAtPosition(DDG51Type, pos);
-	pos.x += 500;
+	pos.x += 200;
 	engine->entityMgr->CreateEntityOfTypeAtPosition(CarrierType, pos);
-	pos.x += 500;
+	pos.x += 200;
 	engine->entityMgr->CreateEntityOfTypeAtPosition(SpeedBoatType, pos);
-	pos.x += 500;
+	pos.x += 200;
 	engine->entityMgr->CreateEntityOfTypeAtPosition(FrigateType, pos);
-	pos.x += 500;
+	pos.x += 200;
 	engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType, pos);
 
 	pos.x = 0;
@@ -80,26 +80,12 @@ void GameMgr::MakeEntities(){
 
 void GameMgr::MakeBoard(){
 
-	Ogre::Vector3 position = Ogre::Vector3(-1000, 5, 0);
+	Ogre::Vector3 position = Ogre::Vector3(-500, 5, 0);
 
 	Ogre::Entity* gridLine = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
 	Ogre::SceneNode* lineNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(position);
 	lineNode->attachObject(gridLine);
-	lineNode->setScale(0.5,0,100);
-
-	//Creates horizontal lines for gameboard
-	for(int i = 0; i < 20; i++){
-
-		Ogre::Entity* gridLine = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
-		Ogre::SceneNode* lineNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(position);
-		lineNode->attachObject(gridLine);
-		lineNode->setScale(0.5,0,100);
-
-		position.x += 1000;
-
-	}
-
-	position = Ogre::Vector3(0, 5, -5000);
+	lineNode->setScale(0.5,0,10);
 
 	//Creates vertical lines for gameboard
 	for(int i = 0; i < 10; i++){
@@ -107,14 +93,48 @@ void GameMgr::MakeBoard(){
 		Ogre::Entity* gridLine = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
 		Ogre::SceneNode* lineNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(position);
 		lineNode->attachObject(gridLine);
-		lineNode->setScale(100,0,0.5);
+		lineNode->setScale(0.25,0,20);
 
-		position.z += 1000;
+		position.x += 100;
 
 	}
 
-	Ogre::Entity* wall = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
-	Ogre::SceneNode* wallNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0,0,0));
-	wallNode->attachObject(wall);
-	wallNode->setScale(100, 20, 0);
+	position = Ogre::Vector3(0, 5, -1000);
+
+	//Creates horizontal lines for gameboard
+	for(int i = 0; i < 20; i++){
+
+		Ogre::Entity* gridLine = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
+		Ogre::SceneNode* lineNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(position);
+		lineNode->attachObject(gridLine);
+		lineNode->setScale(10,0,0.25);
+
+		position.z += 100;
+
+	}
+
+	Ogre::Entity* wallMid = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
+	Ogre::SceneNode* wallMNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0,0,0));
+	wallMNode->attachObject(wallMid);
+	wallMNode->setScale(10, 20, 0);
+
+	Ogre::Entity* wallLeft = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
+	Ogre::SceneNode* wallLNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(-500,0,0));
+	wallLNode->attachObject(wallLeft);
+	wallLNode->setScale(0.5, 10, 20);
+
+	Ogre::Entity* wallRight = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
+	Ogre::SceneNode* wallRNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(500,0,0));
+	wallRNode->attachObject(wallRight);
+	wallRNode->setScale(0.5, 10, 20);
+
+	Ogre::Entity* wallBot = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
+	Ogre::SceneNode* wallBNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0,0,-1000));
+	wallBNode->attachObject(wallBot);
+	wallBNode->setScale(10, 10, 0.5);
+
+	Ogre::Entity* wallTop = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
+	Ogre::SceneNode* wallTNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0,0,1000));
+	wallTNode->attachObject(wallTop);
+	wallTNode->setScale(10, 10, 0.5);
 }
