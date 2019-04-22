@@ -34,6 +34,9 @@ public:
   float desiredHeading, desiredSpeed;
   float heading, speed;
 
+  //game specific data
+  int health, size;
+
   EntityTypes entityType;
 
   std::vector<Aspect* > aspects;

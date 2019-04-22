@@ -28,6 +28,10 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	identity = ident;
 	isSelected = false;
 
+	health = 1;
+	size = 1;
+
+
 	name = "Entity381";//meshfname + IntToString(identity);
 /*
 	ogreEntity = engine->gfxMgr->mSceneMgr->createEntity(meshfilename);
@@ -79,6 +83,8 @@ DDG51::DDG51(Engine *engine, Ogre::Vector3 pos, int ident):
 	this->maxSpeed = 16.0f;//meters per second...
 	this->acceleration = 5.0f; // fast
 	this->turnRate = 20.0f; //4 degrees per second
+	this->health = 2;
+	this->size = 2;
 	std::cout << "Created: " << this->name << std::endl;
 }
 
@@ -95,6 +101,8 @@ Carrier::Carrier(Engine *engine, Ogre::Vector3 pos, int ident):
 	this->maxSpeed = 20.0f;//meters per second...
 	this->acceleration = 1.0f; // slow
 	this->turnRate = 10.0f; //2 degrees per second
+	this->health = 4;
+	this->size = 4;
 }
 
 Carrier::~Carrier(){
@@ -110,6 +118,8 @@ SpeedBoat::SpeedBoat(Engine *engine, Ogre::Vector3 pos, int ident):
 	this->maxSpeed = 30.0f;//meters per second...
 	this->acceleration = 5.0f; // slow
 	this->turnRate = 30.0f; //2 degrees per second
+	this->health = 1;
+	this->size = 1;
 }
 
 SpeedBoat::~SpeedBoat(){
@@ -125,6 +135,8 @@ Frigate::Frigate(Engine *engine, Ogre::Vector3 pos, int ident):
 	this->maxSpeed = 15.0f;//meters per second...
 	this->acceleration = 5.0f; // slow
 	this->turnRate = 20.0f; //2 degrees per second
+	this->health = 2;
+	this->size = 2;
 }
 
 Frigate::~Frigate(){
@@ -140,6 +152,8 @@ Alien::Alien(Engine *engine, Ogre::Vector3 pos, int ident):
 	this->maxSpeed = 50.0f;//meters per second...
 	this->acceleration = 10.0f; // slow
 	this->turnRate = 40.0f; //2 degrees per second
+	this->health = 1;
+	this->size = 1;
 }
 
 Alien::~Alien(){
