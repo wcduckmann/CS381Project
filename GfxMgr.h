@@ -34,6 +34,7 @@ public:
 	void MakeGround();
 	Ogre::Plane oceanSurface;
 	void MakeSky();
+	void MakeFog();
 
 	//Ogre related stuff
 	Ogre::Root* mRoot;
