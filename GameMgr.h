@@ -1,8 +1,8 @@
 /*
  * GameMgr.h
  *
- *  Created on: Mar 4, 2018
- *      Author: sushil
+ *  Created on: Mar 11, 2019
+ *      Author: emjohnson
  */
 
 #ifndef GAMEMGR_H_
@@ -21,6 +21,7 @@ public:
 	void MakeGround();
 	void MakeSky();
 	void MakeEntities();
+	void MakeBoard();
 
 	Ogre::SceneNode *cameraNode;
 

@@ -73,7 +73,7 @@ void GfxMgr::Init(){
   if (!(mRoot->restoreConfig() || mRoot->showConfigDialog()))
 	  std::cerr << "Could not find Config File and could not show Config Dialog" << std::endl;
 
-  mWindow = mRoot->initialise(true, "CS381 As6");
+  mWindow = mRoot->initialise(true, "Tides of War");
 
   Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
   Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
@@ -117,7 +117,7 @@ void GfxMgr::MakeGround(){
 	    Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 	    //plane,
 		oceanSurface,
-	    15000, 15000, 20, 20,
+	    20000, 10000, 20, 20,
 	    true,
 	    1, 5, 5,
 	    Ogre::Vector3::UNIT_Z);
@@ -129,6 +129,13 @@ void GfxMgr::MakeGround(){
 	  //groundEntity->setMaterialName("OceanHLSL_GLSL");
 	   groundEntity->setMaterialName("Ocean2_Cg");
 	  //groundEntity->setMaterialName("NavyCg");
+}
+
+void GfxMgr::MakeFog(){
+
+	Ogre::ColourValue fadeColour(0.9, 0.9, 0.9);
+	mWindow->getViewport(0)->setBackgroundColour(fadeColour);
+	mSceneMgr->setFog(Ogre::FOG_LINEAR, fadeColour, 0.50, 0, 5000);
 }
 
 
@@ -156,4 +163,3 @@ void GfxMgr::Tick(float dt){
 	mRoot->renderOneFrame(dt);
 	Ogre::WindowEventUtilities::messagePump();
 }
-
