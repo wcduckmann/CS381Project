@@ -30,16 +30,6 @@ GfxMgr::GfxMgr(Engine *engine): Mgr(engine) {
 	mSceneMgr = 0;
 	mCamera = 0;
 	//oceanSurface(Ogre::Vector3::UNIT_Y, 0);
-}
-
-GfxMgr::~GfxMgr() {
-
-	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
-	windowClosed(mWindow);
-	delete mRoot;
-}
-
-void GfxMgr::Init(){
 #ifdef _DEBUG
   mResourcesCfg = "resources_d.cfg";
   mPluginsCfg = "plugins_d.cfg";
@@ -73,16 +63,13 @@ void GfxMgr::Init(){
   if (!(mRoot->restoreConfig() || mRoot->showConfigDialog()))
 	  std::cerr << "Could not find Config File and could not show Config Dialog" << std::endl;
 
-  mWindow = mRoot->initialise(true, "Tides of War");
-
-  Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-  Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+  mWindow = mRoot->initialise(true, "CS381 Game Engine Version 1.0");
 
   mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
 
   mCamera = mSceneMgr->createCamera("MainCam");
-  mCamera->setPosition(0, 0, 80);
-  mCamera->lookAt(0, 0, -300);
+  mCamera->setPosition(0, 100, 500);
+  mCamera->lookAt(0, 0, 500);
   mCamera->setNearClipDistance(5);
 
   Ogre::Viewport* vp = mWindow->addViewport(mCamera);
@@ -94,6 +81,19 @@ void GfxMgr::Init(){
 
   //-----------------------------------------------------------------------
   Ogre::WindowEventUtilities::addWindowEventListener(mWindow, this);
+}
+
+GfxMgr::~GfxMgr() {
+
+	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
+	windowClosed(mWindow);
+	delete mRoot;
+}
+
+void GfxMgr::Init(){
+
+  Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+  Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
   //mRoot->addFrameListener(this);
   //mRoot->startRendering();
 
@@ -117,7 +117,7 @@ void GfxMgr::MakeGround(){
 	    Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 	    //plane,
 		oceanSurface,
-	    1000, 2000, 20, 20,
+	    15000, 15000, 20, 20,
 	    true,
 	    1, 5, 5,
 	    Ogre::Vector3::UNIT_Z);
@@ -127,15 +127,8 @@ void GfxMgr::MakeGround(){
 	  groundEntity->setCastShadows(false);
 	  //groundEntity->setMaterialName("Ocean2_HLSL_GLSL");
 	  //groundEntity->setMaterialName("OceanHLSL_GLSL");
-	   groundEntity->setMaterialName("Ocean2_Cg");
+	  groundEntity->setMaterialName("Ocean2_Cg");
 	  //groundEntity->setMaterialName("NavyCg");
-}
-
-void GfxMgr::MakeFog(){
-
-	Ogre::ColourValue fadeColour(0.9, 0.9, 0.9);
-	mWindow->getViewport(0)->setBackgroundColour(fadeColour);
-	mSceneMgr->setFog(Ogre::FOG_LINEAR, fadeColour, 0.50, 0, 5000);
 }
 
 
