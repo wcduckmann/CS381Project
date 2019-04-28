@@ -11,11 +11,20 @@
 class Board{
 public:
 	int gameBoard[10][10];
+	bool shotBoard[10][10];
 	bool isGameOver;
 
 	Board();
-	//void gameToBoard();
     bool checkGameStatus();
+    void initializeBoard();
+    void placeDestroyer(int row, int column);
+    void placeCarrier(int row, int column);
+    void placeSpeedboat(int row, int column);
+    void placeFrigate(int row, int column);
+    void placeAlien(int row, int column);
+    bool Fire(int row, int column);
+
+
 
 };
 

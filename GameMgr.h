@@ -9,6 +9,7 @@
 #define GAMEMGR_H_
 
 #include <Mgr.h>
+#include <Board.h>
 
 class GameMgr: public Mgr {
 public:
@@ -24,6 +25,8 @@ public:
 	void MakeBoard();
 
 	Ogre::SceneNode *cameraNode;
+	Board * playerBoard;
+	Board * AIBoard;
 
 };
 

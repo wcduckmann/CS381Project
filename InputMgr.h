@@ -56,6 +56,9 @@ public:
 	void HandleMouseSelection(const OIS::MouseEvent& me);
 	float selectionDistanceSquaredThreshold;
 
+	int cursorRow;
+	int cursorCol;
+
 
 };
 

@@ -8,7 +8,7 @@
 
 #include <Engine.h>
 
-#include <EntityManager.h>
+#include <EntityMgr.h>
 #include <GameMgr.h>
 #include <GfxMgr.h>
 
@@ -21,6 +21,8 @@
 
 GameMgr::GameMgr(Engine *engine): Mgr(engine) {
 	cameraNode = 0;
+	playerBoard = new Board();
+	AIBoard = new Board();
 }
 
 GameMgr::~GameMgr() {
@@ -61,20 +63,35 @@ void GameMgr::LoadLevel(){
 }
 
 void GameMgr::MakeEntities(){
-	Ogre::Vector3 pos = Ogre::Vector3(-400, 0, 250);
+	Ogre::Vector3 pos = Ogre::Vector3(-400, 0, 50);
+	playerBoard->placeDestroyer(0, 0);
+	AIBoard->placeDestroyer(0, 0);
 	engine->entityMgr->CreateEntityOfTypeAtPosition(DDG51Type, pos);
-	pos.x += 200;
+	pos.x += 100;
+	pos.z += 100;
+	playerBoard->placeCarrier(1, 0);
+	AIBoard->placeCarrier(1, 0);
 	engine->entityMgr->CreateEntityOfTypeAtPosition(CarrierType, pos);
-	pos.x += 200;
+	pos.x = -450;
+	pos.z += 100;
+	playerBoard->placeSpeedboat(2, 0);
+	AIBoard->placeSpeedboat(2, 0);
 	engine->entityMgr->CreateEntityOfTypeAtPosition(SpeedBoatType, pos);
-	pos.x += 200;
+	pos.x = -400;
+	pos.z += 100;
+	playerBoard->placeFrigate(3, 0);
+	AIBoard->placeFrigate(3, 0);
 	engine->entityMgr->CreateEntityOfTypeAtPosition(FrigateType, pos);
-	pos.x += 200;
+	pos.x = -450;
+	pos.z += 100;
+	playerBoard->placeAlien(4, 0);
+	AIBoard->placeAlien(4, 0);
 	engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType, pos);
-
+	/*
 	pos.x = 0;
 	engine->entityMgr->CreateEntityOfTypeAtPosition(BansheeType, pos);
 
+	*/
 	engine->entityMgr->SelectNextEntity(); //sets selection
 }
 
@@ -138,3 +155,5 @@ void GameMgr::MakeBoard(){
 	wallTNode->attachObject(wallTop);
 	wallTNode->setScale(10, 10, 0.5);
 }
+
+

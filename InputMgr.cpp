@@ -25,6 +25,8 @@ InputMgr::InputMgr(Engine *engine) : Mgr(engine), OIS::KeyListener(), OIS::Mouse
 	deltaDesiredHeading = 10.0f;
 	deltaDesiredAltitude = 20;
 	this->selectionDistanceSquaredThreshold = 10000;
+	cursorRow = 0;
+	cursorCol = 0;
 }
 
 InputMgr::~InputMgr() {
@@ -177,6 +179,56 @@ void InputMgr::UpdateCamera(float dt){
 	 			  engine->gameMgr->cameraNode->pitch(Ogre::Degree(2 * -rotate));
 	 		  else
 	 			  engine->gameMgr->cameraNode->pitch(Ogre::Degree(0.5 * -rotate));
+	 	  }
+
+	 	  if(mKeyboard->isKeyDown(OIS::KC_B)){
+
+	 			for(int i = 0 ; i < 10; i++){
+	 				for(int j = 0 ; j < 10; j++){
+
+	 				std::cout << engine->gameMgr->playerBoard->gameBoard[i][j];
+	 			    }
+	 				std::cout << std::endl;
+	 			}
+	 			std::cout << "////////////////////////" << std::endl;
+	 	  }
+
+	 	  if(mKeyboard->isKeyDown(OIS::KC_H)){
+	 			  if(engine->gameMgr->AIBoard->Fire(cursorRow, cursorCol)){
+
+	 				  std::cout << "Ship has been hit at row " << cursorRow << " and column " << cursorCol << std::endl;
+	 			  }
+	 			  else{
+	 				  	std::cout << "Miss at row " << cursorRow << " and column " << cursorCol << std::endl;
+	 			  }
+	 	  }
+
+	 	  if(mKeyboard->isKeyDown(OIS::KC_UP)){
+	 		  cursorRow += 1;
+	 		  if(cursorRow >= 10){
+	 			cursorRow = 0;
+	 		  }
+	 	  }
+
+	 	  if(mKeyboard->isKeyDown(OIS::KC_DOWN)){
+	 		  cursorRow -= 1;
+	 		  if(cursorRow <= 0){
+	 			cursorRow = 9;
+	 		  }
+	 	  }
+
+	 	  if(mKeyboard->isKeyDown(OIS::KC_LEFT)){
+	 		  cursorCol -= 1;
+	 		  if(cursorCol <= 0){
+	 			cursorCol = 9;
+	 		  }
+	 	  }
+
+	 	  if(mKeyboard->isKeyDown(OIS::KC_RIGHT)){
+	 		  cursorCol += 1;
+	 		  if(cursorCol >= 10){
+	 			cursorCol = 0;
+	 		  }
 	 	  }
 
 	  engine->gameMgr->cameraNode->translate(dirVec * dt, Ogre::Node::TS_LOCAL);
