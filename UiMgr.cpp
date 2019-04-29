@@ -45,10 +45,11 @@ void UiMgr::LoadLevel(){
 
 
 	Ogre::StringVector options;
-	options.push_back("Select Boat");
 	options.push_back("Spawn SpeedBoat");
 	options.push_back("Spawn Destroyer");
 	options.push_back("Spawn Carrier");
+	options.push_back("Spawn Frigate");
+	options.push_back("Spawn Alien Ship");
 	mTrayMgr->createLongSelectMenu(OgreBites::TL_TOPRIGHT, "MyMenu", "Menu", 300, 4,options);
 
 	mTrayMgr->showBackdrop("ECSLENT/UI");
