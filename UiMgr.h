@@ -52,7 +52,7 @@ public:
 	OgreBites::Label *infoLabel;
 	OgreBites::Label *infoLabel2;
 	OgreBites::Label *infoLabel3;
-	OgreBits::TextBox * infoBox;
+	OgreBites::TextBox * infoBox;
 };
 
 #endif /* INC_UIMGR_H_ */
