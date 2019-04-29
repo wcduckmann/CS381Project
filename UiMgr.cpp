@@ -60,6 +60,7 @@ void UiMgr::LoadLevel(){
 	infoLabel2 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel2", "No Unit Selected", 250);
 	infoLabel3 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel3", "No Unit Selected", 250);
 
+	infoBox = mTrayMgr->createTextBox(OgreBites::TL_BOTTOM, "Text Box", "Select where to Fire", 250, 250);
 
 	OgreBites::ProgressBar * pbar;
 	pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOP,"HealthBar", "Health", 300, 200);
