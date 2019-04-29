@@ -8,11 +8,15 @@
 #ifndef INC_BOARD_H_
 #define INC_BOARD_H_
 
+#include "Entity381.h"
+#include <vector>
+
 class Board{
 public:
 	int gameBoard[10][10];
 	bool shotBoard[10][10];
 	bool isGameOver;
+	std::vector<Entity381 *> ships;
 
 	Board();
     bool checkGameStatus();
