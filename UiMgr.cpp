@@ -9,7 +9,7 @@
 #include <Engine.h>
 #include <GfxMgr.h>
 #include <InputMgr.h>
-#include <EntityManager.h>
+#include <EntityMgr.h>
 #include <Types381.h>
 
 UiMgr::UiMgr(Engine* eng): Mgr(eng){
@@ -161,6 +161,8 @@ void UiMgr::buttonHit(OgreBites::Button *b){
     else if(b->getName()=="SelectButton")
         {
             std::cout <<"Selection Changed!" << std::endl;
+	    infoBox->appendText("Selection has changed");
+	    infoBox->appendText(std::endl);
             engine->entityMgr->SelectNextEntity();
         }
 
