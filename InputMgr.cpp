@@ -261,7 +261,7 @@ bool InputMgr::mouseMoved(const OIS::MouseEvent& me){
 
 bool InputMgr::mousePressed(const OIS::MouseEvent& me, OIS::MouseButtonID mid){
 	std::cout << "Mouse pressed" << std::endl;
-    if (engine->uiMgr->mTrayMgr->injectMhouseDown(me, mid)) return true;
+    if (engine->uiMgr->mTrayMgr->injectMouseDown(me, mid)) return true;
 	if(OIS::MB_Left == mid){
 		std::cout << "Left mouse press" << std::endl;
 		HandleMouseSelection(me);
