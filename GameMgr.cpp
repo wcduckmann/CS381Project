@@ -50,7 +50,8 @@ void GameMgr::LoadLevel(){
 	  */
 	  // A node to attach the camera to so we can move the camera node instead of the camera.
 	  cameraNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	  cameraNode->setPosition(0, 200, 500);
+	  cameraNode->setPosition(0, 1300, 500);
+	  cameraNode->pitch(Ogre::Degree(-80));
 	  cameraNode->attachObject(engine->gfxMgr->mCamera);
 
 	  engine->gfxMgr->MakeSky();
@@ -90,7 +91,6 @@ void GameMgr::MakeEntities(){
 	/*
 	pos.x = 0;
 	engine->entityMgr->CreateEntityOfTypeAtPosition(BansheeType, pos);
-
 	*/
 	engine->entityMgr->SelectNextEntity(); //sets selection
 }
@@ -99,18 +99,13 @@ void GameMgr::MakeBoard(){
 
 	Ogre::Vector3 position = Ogre::Vector3(-500, 5, 0);
 
-	Ogre::Entity* gridLine = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
-	Ogre::SceneNode* lineNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(position);
-	lineNode->attachObject(gridLine);
-	lineNode->setScale(0.5,0,10);
-
 	//Creates vertical lines for gameboard
 	for(int i = 0; i < 10; i++){
 
 		Ogre::Entity* gridLine = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
 		Ogre::SceneNode* lineNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(position);
 		lineNode->attachObject(gridLine);
-		lineNode->setScale(0.25,0,20);
+		lineNode->setScale(0.1,0,20);
 
 		position.x += 100;
 
@@ -124,7 +119,7 @@ void GameMgr::MakeBoard(){
 		Ogre::Entity* gridLine = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
 		Ogre::SceneNode* lineNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(position);
 		lineNode->attachObject(gridLine);
-		lineNode->setScale(10,0,0.25);
+		lineNode->setScale(10,0,0.1);
 
 		position.z += 100;
 
@@ -138,22 +133,20 @@ void GameMgr::MakeBoard(){
 	Ogre::Entity* wallLeft = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
 	Ogre::SceneNode* wallLNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(-500,0,0));
 	wallLNode->attachObject(wallLeft);
-	wallLNode->setScale(0.5, 10, 20);
+	wallLNode->setScale(0, 10, 20);
 
 	Ogre::Entity* wallRight = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
 	Ogre::SceneNode* wallRNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(500,0,0));
 	wallRNode->attachObject(wallRight);
-	wallRNode->setScale(0.5, 10, 20);
+	wallRNode->setScale(0, 10, 20);
 
 	Ogre::Entity* wallBot = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
 	Ogre::SceneNode* wallBNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0,0,-1000));
 	wallBNode->attachObject(wallBot);
-	wallBNode->setScale(10, 10, 0.5);
+	wallBNode->setScale(10, 10, 0);
 
 	Ogre::Entity* wallTop = engine->gfxMgr->mSceneMgr->createEntity("cube.mesh");
 	Ogre::SceneNode* wallTNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0,0,1000));
 	wallTNode->attachObject(wallTop);
-	wallTNode->setScale(10, 10, 0.5);
+	wallTNode->setScale(10, 10, 0);
 }
-
-

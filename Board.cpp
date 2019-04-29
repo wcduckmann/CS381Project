@@ -59,9 +59,7 @@ void Board::placeAlien(int row, int column){
 
 bool Board::Fire(int row, int column){
 	if(gameBoard[row][column] != 0){
-		shotBoard[row][column] = true;
 		return true;
 	}
-	shotBoard[row][column] = true;
 	return false;
 }

@@ -51,4 +51,3 @@ Banshee::Banshee(Engine *engine, Ogre::Vector3 pos, int ident):
 Banshee::~Banshee() {
 	// TODO Auto-generated destructor stub
 }
-

@@ -1,3 +1,4 @@
+
 /*
  * UiMgr.cpp
  *
@@ -40,30 +41,29 @@ void UiMgr::stop(){
 }
 
 void UiMgr::LoadLevel(){
-	mTrayMgr->createButton(OgreBites::TL_TOPLEFT, "MyButton", "Spawn Boat!");
-	mTrayMgr->createButton(OgreBites::TL_TOPLEFT, "SelectButton", "Select Next");
 
-
-	Ogre::StringVector options;
-	options.push_back("Spawn SpeedBoat");
-	options.push_back("Spawn Destroyer");
-	options.push_back("Spawn Carrier");
-	options.push_back("Spawn Frigate");
-	options.push_back("Spawn Alien Ship");
-	mTrayMgr->createLongSelectMenu(OgreBites::TL_TOPRIGHT, "MyMenu", "Menu", 300, 4,options);
+	Ogre::StringVector spawnOptions;
+	spawnOptions.push_back("Spawn SpeedBoat");
+	spawnOptions.push_back("Spawn Destroyer");
+	spawnOptions.push_back("Spawn Carrier");
+	spawnOptions.push_back("Spawn Frigate");
+	spawnOptions.push_back("Spawn Alien Ship");
+	mTrayMgr->createLongSelectMenu(OgreBites::TL_TOPRIGHT, "MyMenu", "Place boats", 300, 4,spawnOptions);
 
 	mTrayMgr->showBackdrop("ECSLENT/UI");
 
-	mLabel = mTrayMgr->createLabel(OgreBites::TL_LEFT,"MyLabel","Label!",250);
+	//mLabel = mTrayMgr->createLabel(OgreBites::TL_LEFT,"MyLabel","Label!",250);
 
-	infoLabel = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel", "No Unit Selected", 250);
-	infoLabel2 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel2", "No Unit Selected", 250);
-	infoLabel3 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel3", "No Unit Selected", 250);
+	//infoLabel = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel", "No Unit Selected", 250);
+	//infoLabel2 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel2", "No Unit Selected", 250);
+	//infoLabel3 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel3", "No Unit Selected", 250);
 
-	infoBox = mTrayMgr->createTextBox(OgreBites::TL_BOTTOM, "Text Box", "Select where to Fire", 250, 250);
+	mTrayMgr->createButton(OgreBites::TL_RIGHT, "FireButton", "Fire!");
+
+	infoBox = mTrayMgr->createTextBox(OgreBites::TL_BOTTOM, "Text Box", "Game Log", 500, 120);
 
 	OgreBites::ProgressBar * pbar;
-	pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOP,"HealthBar", "Health", 300, 200);
+	pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT,"HealthBar", "Health", 300, 200);
 	pbar->setProgress(100);
 
 }
@@ -71,7 +71,7 @@ void UiMgr::LoadLevel(){
 void UiMgr::Tick(float dt){
 	mTrayMgr->refreshCursor();
 
-	switch(engine->entityMgr->selectedEntity->entityType)
+	/*switch(engine->entityMgr->selectedEntity->entityType)
 	{
 		case DDG51Type:
 			infoLabel->setCaption("Type: DDG51");
@@ -109,7 +109,7 @@ void UiMgr::Tick(float dt){
 			infoLabel3->setCaption("No Unit Selected");
 			break;
 
-	}
+	}*/
 }
 
 void UiMgr::windowResized(Ogre::RenderWindow* rw){
@@ -149,20 +149,23 @@ bool UiMgr::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id){
 }
 
 void UiMgr::buttonHit(OgreBites::Button *b){
-    if(b->getName()=="MyButton")
+    if(b->getName()=="FireButton")
     {
-        std::cout <<"Boat Spawned!" << std::endl;
+        /*std::cout <<"Boat Spawned!" << std::endl;
         Ogre::Vector3 pos;
         pos.x = 0;
         pos.y = 0;
         pos.z = -100;
-        engine->entityMgr->CreateEntityOfTypeAtPosition(SpeedBoatType,pos);
+        engine->entityMgr->CreateEntityOfTypeAtPosition(SpeedBoatType,pos);*/
+
+        infoBox->appendText("Firing on enemy position! \n");
+
     }
-    else if(b->getName()=="SelectButton")
+    else if(b->getName()=="Button")
         {
             std::cout <<"Selection Changed!" << std::endl;
-	    infoBox->appendText("Selection has changed");
-	    infoBox->appendText(std::endl);
+            infoBox->appendText("Selection has changed");
+           	infoBox->appendText("\n");
             engine->entityMgr->SelectNextEntity();
         }
 
@@ -170,32 +173,47 @@ void UiMgr::buttonHit(OgreBites::Button *b){
 
 void UiMgr::itemSelected(OgreBites::SelectMenu *m){
     Ogre::Vector3 pos;
-    pos.x = 0;
-    pos.y = 0;
-    pos.z = 100;
+
+
     switch(m->getSelectionIndex()){
     case 1:
     	engine->entityMgr->CreateEntityOfTypeAtPosition(SpeedBoatType,pos);
-    	mLabel->setCaption("SpeedBoat has Arrived!");
+    	//mLabel->setCaption("SpeedBoat has Arrived!");
     	break;
     case 2:
     	engine->entityMgr->CreateEntityOfTypeAtPosition(DDG51Type,pos);
-    	mLabel->setCaption("DDG51 has Arrived!");
+    	//mLabel->setCaption("DDG51 has Arrived!");
     	break;
     case 3:
     	engine->entityMgr->CreateEntityOfTypeAtPosition(CarrierType,pos);
-    	mLabel->setCaption("Carrier has Arrived!");
+    	//mLabel->setCaption("Carrier has Arrived!");
     	break;
     case 4:
     	engine->entityMgr->CreateEntityOfTypeAtPosition(FrigateType,pos);
-    	mLabel->setCaption("Frigate has Arrived!");
+    	//mLabel->setCaption("Frigate has Arrived!");
     	break;
     case 5:
     	engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType,pos);
-    	mLabel->setCaption("Alien ship has Arrived!");
+    	//mLabel->setCaption("Alien ship has Arrived!");
     	break;
     default:
     	break;
     }
+
+}
+
+Ogre::Vector3 UiMgr::getSpawnPosition(int row, int col, bool orient, int boatSize){
+
+	Ogre::Vector3 pos = Ogre::Vector3::ZERO;
+
+	//Changes user input to zero based indexing
+	int r = row - 1;
+	int c = col - 1;
+
+	pos.x = -400 + 100 * r;
+	pos.z = 50 + 100 * c;
+
+	return pos;
+
 
 }

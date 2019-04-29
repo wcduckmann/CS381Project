@@ -63,13 +63,12 @@ GfxMgr::GfxMgr(Engine *engine): Mgr(engine) {
   if (!(mRoot->restoreConfig() || mRoot->showConfigDialog()))
 	  std::cerr << "Could not find Config File and could not show Config Dialog" << std::endl;
 
-  mWindow = mRoot->initialise(true, "CS381 Game Engine Version 1.0");
+  mWindow = mRoot->initialise(true, "Tides of War");
 
   mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
 
   mCamera = mSceneMgr->createCamera("MainCam");
   mCamera->setPosition(0, 100, 500);
-  mCamera->lookAt(0, 0, 500);
   mCamera->setNearClipDistance(5);
 
   Ogre::Viewport* vp = mWindow->addViewport(mCamera);

@@ -1,16 +1,16 @@
 /*
  * Utils.h
  *
- *  Created on: Mar 1, 2018
- *      Author: sushil
+ *  Created on: Mar 11, 2019
+ *      Author: emjohnson
  */
 
-#ifndef UTILS_H_
-#define UTILS_H_
+#ifndef INC_UTILS_H_
+#define INC_UTILS_H_
 
 float FixAngle(float angle);
 float Clamp(float min, float max, float val);
 
 
 
-#endif /* UTILS_H_ */
+#endif /* INC_UTILS_H_ */

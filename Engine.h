@@ -1,17 +1,20 @@
 /*
  * Engine.h
  *
- *  Created on: Mar 4, 2018
- *      Author: sushil
+ *  Created on: Mar 11, 2019
+ *      Author: emjohnson
  */
 
-#ifndef ENGINE_H_
-#define ENGINE_H_
+#ifndef INC_ENGINE_H_
+#define INC_ENGINE_H_
+
 
 class EntityMgr;
 class GameMgr;
 class GfxMgr;
 class InputMgr;
+class UiMgr;
+class SoundMgr;
 
 class Engine {
 public:
@@ -22,6 +25,8 @@ public:
 	GameMgr   *gameMgr;
 	GfxMgr    *gfxMgr;
 	InputMgr  *inputMgr;
+	UiMgr	  *uiMgr;
+	//OgreSND::SoundMgr*	soundMgr;
 
 	void Init();
 	void Run();
@@ -31,4 +36,5 @@ public:
 	bool keepRunning;
 };
 
-#endif /* ENGINE_H_ */
+
+#endif /* INC_ENGINE_H_ */

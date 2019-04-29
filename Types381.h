@@ -1,5 +1,13 @@
-#ifndef __TYPES381_h_
-#define __TYPES381_h_
+/*
+ * Types381.h
+ *
+ *  Created on: Mar 3, 2019
+ *      Author: emjohnson
+ */
+
+#ifndef INC_TYPES381_H_
+#define INC_TYPES381_H_
+
 
 enum EntityTypes {
 	DDG51Type,
@@ -12,5 +20,4 @@ enum EntityTypes {
 };
 
 
-
-#endif // #ifndef __Entity381_h_
+#endif /* INC_TYPES381_H_ */

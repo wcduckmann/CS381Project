@@ -1,12 +1,12 @@
 /*
  * Mgr.h
  *
- *  Created on: Mar 4, 2018
- *      Author: sushil
+ *  Created on: Mar 11, 2019
+ *      Author: emjohnson
  */
 
-#ifndef MGR_H_
-#define MGR_H_
+#ifndef INC_MGR_H_
+#define INC_MGR_H_
 
 class Engine;
 
@@ -24,4 +24,6 @@ public:
 
 };
 
-#endif /* MGR_H_ */
+
+
+#endif /* INC_MGR_H_ */

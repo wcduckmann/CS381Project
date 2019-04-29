@@ -5,8 +5,8 @@
  *      Author: sushil
  */
 
-#include <EntityMgr.h>
 #include <Engine.h>
+#include <EntityMgr.h>
 
 EntityMgr::EntityMgr(Engine *eng): Mgr(eng){
 	selectedEntity = 0;

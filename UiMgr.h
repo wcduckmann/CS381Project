@@ -35,6 +35,7 @@ protected:
 
     void buttonHit(OgreBites::Button *b);
     void itemSelected(OgreBites::SelectMenu *m);
+    Ogre::Vector3 getSpawnPosition(int row, int col, bool orient, int boatSize);
 
 public:
 
