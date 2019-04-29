@@ -183,6 +183,14 @@ void UiMgr::itemSelected(OgreBites::SelectMenu *m){
     	engine->entityMgr->CreateEntityOfTypeAtPosition(CarrierType,pos);
     	mLabel->setCaption("Carrier has Arrived!");
     	break;
+    case 4:
+    	engine->entityMgr->CreateEntityOfTypeAtPosition(FrigateType,pos);
+    	mLabel->setCaption("Frigate has Arrived!");
+    	break;
+    case 5:
+    	engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType,pos);
+    	mLabel->setCaption("Alien ship has Arrived!");
+    	break;
     default:
     	break;
     }
