@@ -5,7 +5,7 @@
  *      Author: chad
  */
 
-#include <UIMgr.h>
+#include <UiMgr.h>
 #include <Engine.h>
 #include <GfxMgr.h>
 #include <InputMgr.h>
