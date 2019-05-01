@@ -59,6 +59,8 @@ void UiMgr::LoadLevel(){
 	//infoLabel3 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel3", "No Unit Selected", 250);
 
 	mTrayMgr->createButton(OgreBites::TL_RIGHT, "FireButton", "Fire!");
+	rowSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "RowSlider", "Row: ", 200, 150, 1, 10, 10);
+	colSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "ColSlider", "Col: ", 200, 150, 1, 10, 10);
 
 	infoBox = mTrayMgr->createTextBox(OgreBites::TL_BOTTOM, "Text Box", "Game Log", 500, 120);
 
@@ -158,7 +160,17 @@ void UiMgr::buttonHit(OgreBites::Button *b){
         pos.z = -100;
         engine->entityMgr->CreateEntityOfTypeAtPosition(SpeedBoatType,pos);*/
 
-        infoBox->appendText("Firing on enemy position! \n");
+    	Ogre::StringConverter converter;
+
+    	Ogre::String rowValue = converter.toString(rowSlider->getValue());
+    	Ogre::String colValue = converter.toString(colSlider->getValue());
+
+        infoBox->appendText("Firing on enemy position: ");
+        infoBox->appendText(rowValue);
+        infoBox->appendText(", ");
+        infoBox->appendText(colValue);
+        infoBox->appendText("\n");
+
 
     }
     else if(b->getName()=="Button")

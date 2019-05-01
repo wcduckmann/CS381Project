@@ -54,6 +54,8 @@ public:
 	OgreBites::Label *infoLabel2;
 	OgreBites::Label *infoLabel3;
 	OgreBites::TextBox * infoBox;
+	OgreBites::Slider *rowSlider;
+	OgreBites::Slider *colSlider;
 };
 
 #endif /* INC_UIMGR_H_ */
