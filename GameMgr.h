@@ -23,6 +23,7 @@ public:
 	void MakeSky();
 	void MakeEntities();
 	void MakeBoard();
+	void AIMove();
 
 	Ogre::SceneNode *cameraNode;
 	Board * playerBoard;

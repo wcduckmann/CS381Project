@@ -56,6 +56,8 @@ public:
 	OgreBites::TextBox * infoBox;
 	OgreBites::Slider *rowSlider;
 	OgreBites::Slider *colSlider;
+
+	int clicks;
 };
 
 #endif /* INC_UIMGR_H_ */

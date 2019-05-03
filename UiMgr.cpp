@@ -12,6 +12,7 @@
 #include <InputMgr.h>
 #include <EntityMgr.h>
 #include <Types381.h>
+#include <GameMgr.h>
 
 UiMgr::UiMgr(Engine* eng): Mgr(eng){
 	// Initialize the OverlaySystem (changed for Ogre 1.9)
@@ -67,6 +68,8 @@ void UiMgr::LoadLevel(){
 	OgreBites::ProgressBar * pbar;
 	pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT,"HealthBar", "Health", 300, 200);
 	pbar->setProgress(100);
+
+	clicks = 0;
 
 }
 
@@ -159,7 +162,6 @@ void UiMgr::buttonHit(OgreBites::Button *b){
         pos.y = 0;
         pos.z = -100;
         engine->entityMgr->CreateEntityOfTypeAtPosition(SpeedBoatType,pos);*/
-
     	Ogre::StringConverter converter;
 
     	Ogre::String rowValue = converter.toString(rowSlider->getValue());
@@ -171,6 +173,34 @@ void UiMgr::buttonHit(OgreBites::Button *b){
         infoBox->appendText(colValue);
         infoBox->appendText("\n");
 
+        if(engine->gameMgr->AIBoard->Fire(rowSlider->getValue(), colSlider->getValue())){
+            infoBox->appendText("Ship has been hit at row ");
+            infoBox->appendText(rowValue);
+            infoBox->appendText(" and column ");
+            infoBox->appendText(colValue);
+            infoBox->appendText("\n");
+
+        }
+        else{
+        	infoBox->appendText("Miss!");
+            infoBox->appendText("\n");
+        }
+
+        engine->gameMgr->AIMove();
+
+        bool gameLost = engine->gameMgr->playerBoard->checkGameStatus();
+        bool gameWon = engine->gameMgr->AIBoard->checkGameStatus();
+
+        if(gameLost){
+        	infoBox->appendText("You Lose! Game over.");
+        }
+        else if(gameWon){
+        	infoBox->appendText("You win! Game over.");
+        }
+        clicks++;
+        if(clicks >= 2){
+        	infoBox->setScrollPercentage(100);
+        }
 
     }
     else if(b->getName()=="Button")
@@ -180,7 +210,6 @@ void UiMgr::buttonHit(OgreBites::Button *b){
            	infoBox->appendText("\n");
             engine->entityMgr->SelectNextEntity();
         }
-
 }
 
 void UiMgr::itemSelected(OgreBites::SelectMenu *m){

@@ -11,9 +11,13 @@
 #include <EntityMgr.h>
 #include <GameMgr.h>
 #include <GfxMgr.h>
+#include <UiMgr.h>
 
 #include <iostream>
 #include <Types381.h>
+
+#include <cstdlib>
+#include <ctime>
 
 #include <OgreOverlay.h>
 #include <OgreSceneNode.h>
@@ -58,7 +62,7 @@ void GameMgr::LoadLevel(){
 	  //engine->gfxMgr->MakeFog();
 	  engine->gfxMgr->MakeGround();
 
-
+	  std::srand(std::time(NULL));
 	  MakeBoard();
 	  MakeEntities();
 }
@@ -149,4 +153,27 @@ void GameMgr::MakeBoard(){
 	Ogre::SceneNode* wallTNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0,0,1000));
 	wallTNode->attachObject(wallTop);
 	wallTNode->setScale(10, 10, 0);
+}
+
+void GameMgr::AIMove(){
+	int row = 1 + std::rand() % 10;
+	int col = 1 + std::rand() % 10;
+
+	Ogre::StringConverter converter;
+
+	Ogre::String rowValue = converter.toString(row);
+	Ogre::String colValue = converter.toString(col);
+	if(playerBoard->Fire(row, col)){
+		engine->uiMgr->infoBox->appendText("Your ship has been hit at row ");
+		engine->uiMgr->infoBox->appendText(rowValue);
+		engine->uiMgr->infoBox->appendText(" and column ");
+		engine->uiMgr->infoBox->appendText(colValue);
+		engine->uiMgr->infoBox->appendText("\n");
+	}
+	else{
+		engine->uiMgr->infoBox->appendText("The enemy has missed");
+		engine->uiMgr->infoBox->appendText("\n");
+	}
+
+
 }
