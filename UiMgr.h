@@ -57,6 +57,8 @@ public:
 	OgreBites::Slider *rowSlider;
 	OgreBites::Slider *colSlider;
 
+	OgreBites::ProgressBar * pbar;
+
 	int clicks;
 };
 

@@ -12,6 +12,8 @@
 #include <GameMgr.h>
 #include <GfxMgr.h>
 #include <UiMgr.h>
+#include <Aspect.h>
+#include <UnitAI.h>
 
 #include <iostream>
 #include <Types381.h>
@@ -176,4 +178,33 @@ void GameMgr::AIMove(){
 	}
 
 
+}
+
+void GameMgr::sendShipAway(){
+	Ogre::Vector3 goAway = Ogre::Vector3(1000, 0, 1000);
+
+	if(playerBoard->alienHealth == 0){
+		MoveTo * move = new MoveTo(engine->entityMgr->entities[4], goAway);
+		engine->entityMgr->entities[4]->aspects[2]->AddCommand(move);
+	}
+
+	if(playerBoard->speedboatHealth == 0){
+		MoveTo * move = new MoveTo(engine->entityMgr->entities[2], goAway);
+		engine->entityMgr->entities[2]->aspects[2]->AddCommand(move);
+	}
+
+	if(playerBoard->frigateHealth == 0){
+		MoveTo * move = new MoveTo(engine->entityMgr->entities[3], goAway);
+		engine->entityMgr->entities[3]->aspects[2]->AddCommand(move);
+	}
+
+	if(playerBoard->carrierHealth == 0){
+		MoveTo * move = new MoveTo(engine->entityMgr->entities[1], goAway);
+		engine->entityMgr->entities[1]->aspects[2]->AddCommand(move);
+	}
+
+	if(playerBoard->destroyerHealth == 0){
+		MoveTo * move = new MoveTo(engine->entityMgr->entities[0], goAway);
+		engine->entityMgr->entities[0]->aspects[2]->AddCommand(move);
+	}
 }

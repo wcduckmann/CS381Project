@@ -44,11 +44,11 @@ void UiMgr::stop(){
 void UiMgr::LoadLevel(){
 
 	Ogre::StringVector spawnOptions;
-	spawnOptions.push_back("Spawn SpeedBoat");
-	spawnOptions.push_back("Spawn Destroyer");
-	spawnOptions.push_back("Spawn Carrier");
-	spawnOptions.push_back("Spawn Frigate");
-	spawnOptions.push_back("Spawn Alien Ship");
+	spawnOptions.push_back("Select SpeedBoat");
+	spawnOptions.push_back("Select Destroyer");
+	spawnOptions.push_back("Select Carrier");
+	spawnOptions.push_back("Select Frigate");
+	spawnOptions.push_back("Select Alien Ship");
 	mTrayMgr->createLongSelectMenu(OgreBites::TL_TOPRIGHT, "MyMenu", "Place boats", 300, 4,spawnOptions);
 
 	mTrayMgr->showBackdrop("ECSLENT/UI");
@@ -65,9 +65,8 @@ void UiMgr::LoadLevel(){
 
 	infoBox = mTrayMgr->createTextBox(OgreBites::TL_BOTTOM, "Text Box", "Game Log", 500, 120);
 
-	OgreBites::ProgressBar * pbar;
 	pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT,"HealthBar", "Health", 300, 200);
-	pbar->setProgress(100);
+	pbar->setProgress(1);
 
 	clicks = 0;
 
@@ -187,6 +186,7 @@ void UiMgr::buttonHit(OgreBites::Button *b){
         }
 
         engine->gameMgr->AIMove();
+        engine->gameMgr->sendShipAway();
 
         bool gameLost = engine->gameMgr->playerBoard->checkGameStatus();
         bool gameWon = engine->gameMgr->AIBoard->checkGameStatus();
@@ -216,26 +216,31 @@ void UiMgr::itemSelected(OgreBites::SelectMenu *m){
     Ogre::Vector3 pos;
 
 
-    switch(m->getSelectionIndex()){
+    switch(m->getSelectionIndex() + 1){
     case 1:
-    	engine->entityMgr->CreateEntityOfTypeAtPosition(SpeedBoatType,pos);
+    	//engine->entityMgr->CreateEntityOfTypeAtPosition(SpeedBoatType,pos);
     	//mLabel->setCaption("SpeedBoat has Arrived!");
+    	pbar->setProgress(engine->gameMgr->playerBoard->speedboatHealth);
     	break;
     case 2:
-    	engine->entityMgr->CreateEntityOfTypeAtPosition(DDG51Type,pos);
+    	//engine->entityMgr->CreateEntityOfTypeAtPosition(DDG51Type,pos);
     	//mLabel->setCaption("DDG51 has Arrived!");
+    	pbar->setProgress(engine->gameMgr->playerBoard->destroyerHealth * .5);
     	break;
     case 3:
-    	engine->entityMgr->CreateEntityOfTypeAtPosition(CarrierType,pos);
+    	//engine->entityMgr->CreateEntityOfTypeAtPosition(CarrierType,pos);
     	//mLabel->setCaption("Carrier has Arrived!");
+    	pbar->setProgress(engine->gameMgr->playerBoard->carrierHealth * .25);
     	break;
     case 4:
-    	engine->entityMgr->CreateEntityOfTypeAtPosition(FrigateType,pos);
+    	//engine->entityMgr->CreateEntityOfTypeAtPosition(FrigateType,pos);
     	//mLabel->setCaption("Frigate has Arrived!");
+    	pbar->setProgress(engine->gameMgr->playerBoard->frigateHealth * .5);
     	break;
     case 5:
-    	engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType,pos);
+    	//engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType,pos);
     	//mLabel->setCaption("Alien ship has Arrived!");
+    	pbar->setProgress(engine->gameMgr->playerBoard->alienHealth);
     	break;
     default:
     	break;

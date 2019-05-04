@@ -24,6 +24,7 @@ public:
 	void MakeEntities();
 	void MakeBoard();
 	void AIMove();
+	void sendShipAway();
 
 	Ogre::SceneNode *cameraNode;
 	Board * playerBoard;

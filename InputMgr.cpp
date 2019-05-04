@@ -141,7 +141,7 @@ void InputMgr::UpdateCamera(float dt){
 		 			for(int i = 0 ; i < 10; i++){
 		 				for(int j = 0 ; j < 10; j++){
 
-		 				std::cout << engine->gameMgr->AIBoard->gameBoard[i][j];
+		 				std::cout << engine->gameMgr->playerBoard->gameBoard[i][j];
 		 			    }
 		 				std::cout << std::endl;
 		 			}
