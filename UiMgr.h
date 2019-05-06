@@ -56,6 +56,7 @@ public:
 	OgreBites::TextBox * infoBox;
 	OgreBites::Slider *rowSlider;
 	OgreBites::Slider *colSlider;
+	Ogre::Rectangle2D *rect;
 
 	OgreBites::ProgressBar * pbar;
 

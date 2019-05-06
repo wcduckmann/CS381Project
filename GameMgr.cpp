@@ -1,4 +1,5 @@
 
+
 /*
  * GameMgr.cpp
  *
@@ -29,6 +30,11 @@ GameMgr::GameMgr(Engine *engine): Mgr(engine) {
 	cameraNode = 0;
 	playerBoard = new Board();
 	AIBoard = new Board();
+
+	for(int i= 0; i < 5; i++){
+
+		alreadySunk[i] = 0;
+	}
 }
 
 GameMgr::~GameMgr() {
@@ -158,10 +164,15 @@ void GameMgr::MakeBoard(){
 }
 
 void GameMgr::AIMove(){
+
+	sinkAiShip();
+
 	int row = 1 + std::rand() % 10;
 	int col = 1 + std::rand() % 10;
 
 	Ogre::StringConverter converter;
+
+
 
 	Ogre::String rowValue = converter.toString(row);
 	Ogre::String colValue = converter.toString(col);
@@ -186,25 +197,54 @@ void GameMgr::sendShipAway(){
 	if(playerBoard->alienHealth == 0){
 		MoveTo * move = new MoveTo(engine->entityMgr->entities[4], goAway);
 		engine->entityMgr->entities[4]->aspects[2]->AddCommand(move);
+
 	}
 
 	if(playerBoard->speedboatHealth == 0){
 		MoveTo * move = new MoveTo(engine->entityMgr->entities[2], goAway);
 		engine->entityMgr->entities[2]->aspects[2]->AddCommand(move);
+
 	}
 
 	if(playerBoard->frigateHealth == 0){
 		MoveTo * move = new MoveTo(engine->entityMgr->entities[3], goAway);
 		engine->entityMgr->entities[3]->aspects[2]->AddCommand(move);
+
 	}
 
 	if(playerBoard->carrierHealth == 0){
 		MoveTo * move = new MoveTo(engine->entityMgr->entities[1], goAway);
 		engine->entityMgr->entities[1]->aspects[2]->AddCommand(move);
+
 	}
 
 	if(playerBoard->destroyerHealth == 0){
 		MoveTo * move = new MoveTo(engine->entityMgr->entities[0], goAway);
 		engine->entityMgr->entities[0]->aspects[2]->AddCommand(move);
+
 	}
+}
+
+void GameMgr::sinkAiShip(){
+
+	   if(AIBoard->carrierHealth == 0 && alreadySunk[0] == 0){
+		   engine->uiMgr->infoBox->appendText("You sunk the enemy carrier! \n");
+		   alreadySunk[0] = 1;
+	   }
+	   else if(AIBoard->alienHealth == 0 && alreadySunk[1] == 0){
+	       engine->uiMgr->infoBox->appendText("You sunk the enemy alien ship! \n");
+	       alreadySunk[1] = 1;
+	   }
+	   else if(AIBoard->frigateHealth == 0 && alreadySunk[2] == 0){
+	       engine->uiMgr->infoBox->appendText("You sunk the enemy frigate! \n");
+	       alreadySunk[2] = 1;
+	   }
+	   else if(AIBoard->speedboatHealth == 0 && alreadySunk[3] == 0){
+	       engine->uiMgr->infoBox->appendText("You sunk the enemy speedboat! \n");
+	       alreadySunk[3] = 1;
+	   }
+	   else if(AIBoard->destroyerHealth == 0 && alreadySunk[4] == 0){
+	       engine->uiMgr->infoBox->appendText("You sunk the enemy destroyer! \n");
+	       alreadySunk[4] = 1;
+	   }
 }

@@ -45,10 +45,5 @@ void Renderable::Tick(float dt){
 	entity->sceneNode->setPosition(entity->position); //now ogre should render the sceneNode at the new position...
 	entity->sceneNode->resetOrientation(); // yaw is cumulative, so set current y-rotation to 0
 	entity->sceneNode->yaw(Ogre::Degree(-entity->heading)); //ogre's yaw is in the direction of -z
-	//bounding boxes are rendered so...
-	if(entity->isSelected)
-		entity->sceneNode->showBoundingBox(true);
-	else
-		entity->sceneNode->showBoundingBox(false); //or we could do this in the entity mgr every time tab is pressed....
 
 }

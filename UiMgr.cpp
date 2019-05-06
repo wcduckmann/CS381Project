@@ -43,32 +43,28 @@ void UiMgr::stop(){
 
 void UiMgr::LoadLevel(){
 
-	Ogre::StringVector spawnOptions;
-	spawnOptions.push_back("Select SpeedBoat");
-	spawnOptions.push_back("Select Destroyer");
-	spawnOptions.push_back("Select Carrier");
-	spawnOptions.push_back("Select Frigate");
-	spawnOptions.push_back("Select Alien Ship");
-	mTrayMgr->createLongSelectMenu(OgreBites::TL_TOPRIGHT, "MyMenu", "Place boats", 300, 4,spawnOptions);
+	// Create background material
+	Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("Background", "General");
+	material->getTechnique(0)->getPass(0)->createTextureUnitState("rockwall.tga");
+	material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(true);
+	material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(true);
+	material->getTechnique(0)->getPass(0)->setLightingEnabled(false);
 
-	mTrayMgr->showBackdrop("ECSLENT/UI");
+	// Create background rectangle covering the whole screen
+	rect = new Ogre::Rectangle2D(true);
+	rect->setCorners(-1.0, 1.0, 1.0, -1.0);
+	rect->setMaterial("Background");
 
-	//mLabel = mTrayMgr->createLabel(OgreBites::TL_LEFT,"MyLabel","Label!",250);
+	// Use infinite AAB to always stay visible
+	Ogre::AxisAlignedBox aabInf;
+	aabInf.setInfinite();
+	rect->setBoundingBox(aabInf);
 
-	//infoLabel = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel", "No Unit Selected", 250);
-	//infoLabel2 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel2", "No Unit Selected", 250);
-	//infoLabel3 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel3", "No Unit Selected", 250);
+	// Attach background to the scene
+	Ogre::SceneNode* node = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode("Background");
+	node->attachObject(rect);
 
-	mTrayMgr->createButton(OgreBites::TL_RIGHT, "FireButton", "Fire!");
-	rowSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "RowSlider", "Row: ", 200, 150, 1, 10, 10);
-	colSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "ColSlider", "Col: ", 200, 150, 1, 10, 10);
-
-	infoBox = mTrayMgr->createTextBox(OgreBites::TL_BOTTOM, "Text Box", "Game Log", 500, 120);
-
-	pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT,"HealthBar", "Health", 300, 200);
-	pbar->setProgress(1);
-
-	clicks = 0;
+	mTrayMgr->createButton(OgreBites::TL_CENTER, "PlayButton", "Play!", 500);
 
 }
 
@@ -112,7 +108,6 @@ void UiMgr::Tick(float dt){
 			infoLabel2->setCaption("No Unit Selected");
 			infoLabel3->setCaption("No Unit Selected");
 			break;
-
 	}*/
 }
 
@@ -179,6 +174,8 @@ void UiMgr::buttonHit(OgreBites::Button *b){
             infoBox->appendText(colValue);
             infoBox->appendText("\n");
 
+
+
         }
         else{
         	infoBox->appendText("Miss!");
@@ -192,24 +189,53 @@ void UiMgr::buttonHit(OgreBites::Button *b){
         bool gameWon = engine->gameMgr->AIBoard->checkGameStatus();
 
         if(gameLost){
-        	infoBox->appendText("You Lose! Game over.");
+        	infoBox->appendText("You Lose! Game over. \n");
+        	infoBox->appendText("Tides of War was made by Andrew Cooper, Erik Johnson, and Will Duckhorn.\n");
         }
         else if(gameWon){
-        	infoBox->appendText("You win! Game over.");
+        	infoBox->appendText("You win! Game over. \n");
+        	infoBox->appendText("Tides of War was made by Andrew Cooper, Erik Johnson, and Will Duckhorn.\n");
         }
+
         clicks++;
         if(clicks >= 2){
         	infoBox->setScrollPercentage(100);
         }
 
     }
-    else if(b->getName()=="Button")
-        {
-            std::cout <<"Selection Changed!" << std::endl;
-            infoBox->appendText("Selection has changed");
-           	infoBox->appendText("\n");
-            engine->entityMgr->SelectNextEntity();
-        }
+    else if(b->getName()=="PlayButton")
+    {
+    	Ogre::StringVector spawnOptions;
+    	spawnOptions.push_back("Select SpeedBoat");
+    	spawnOptions.push_back("Select Destroyer");
+    	spawnOptions.push_back("Select Carrier");
+    	spawnOptions.push_back("Select Frigate");
+    	spawnOptions.push_back("Select Alien Ship");
+    	mTrayMgr->createLongSelectMenu(OgreBites::TL_TOPRIGHT, "MyMenu", "Select Ship", 300, 4,spawnOptions);
+
+    	mTrayMgr->showBackdrop("ECSLENT/UI");
+
+    	//mLabel = mTrayMgr->createLabel(OgreBites::TL_LEFT,"MyLabel","Label!",250);
+
+    	//infoLabel = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel", "No Unit Selected", 250);
+    	//infoLabel2 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel2", "No Unit Selected", 250);
+    	//infoLabel3 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel3", "No Unit Selected", 250);
+
+    	mTrayMgr->createButton(OgreBites::TL_RIGHT, "FireButton", "Fire!");
+    	rowSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "RowSlider", "Row: ", 200, 150, 1, 10, 10);
+    	colSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "ColSlider", "Col: ", 200, 150, 1, 10, 10);
+
+    	infoBox = mTrayMgr->createTextBox(OgreBites::TL_BOTTOM, "Text Box", "Game Log", 500, 120);
+
+    	pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT,"HealthBar", "Health", 300, 200);
+    	pbar->setProgress(1);
+
+    	clicks = 0;
+
+    	engine->gfxMgr->mSceneMgr->destroySceneNode("Background");
+    	delete rect;
+    	mTrayMgr->destroyWidget("PlayButton");
+    }
 }
 
 void UiMgr::itemSelected(OgreBites::SelectMenu *m){

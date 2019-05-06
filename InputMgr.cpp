@@ -1,3 +1,4 @@
+
 /*
  * InputMgr.cpp
  *
@@ -103,21 +104,15 @@ void InputMgr::Tick(float dt){
 void InputMgr::UpdateCamera(float dt){
 	/*float move = 400.0f;
 	float rotate = 0.1f;
-
 	 Ogre::Vector3 dirVec = Ogre::Vector3::ZERO;
-
 	  if (mKeyboard->isKeyDown(OIS::KC_W))
 	    dirVec.z -= move;
-
 	  if (mKeyboard->isKeyDown(OIS::KC_S))
 	    dirVec.z += move;
-
 	  if (mKeyboard->isKeyDown(OIS::KC_E))
 	    dirVec.y += move;
-
 	  if (mKeyboard->isKeyDown(OIS::KC_F))
 	    dirVec.y -= move;
-
 	  if (mKeyboard->isKeyDown(OIS::KC_A))
 	  {
 	    if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
@@ -125,7 +120,6 @@ void InputMgr::UpdateCamera(float dt){
 	    else
 	      dirVec.x -= move;
 	  }
-
 	  if (mKeyboard->isKeyDown(OIS::KC_D))
 	  {
 	    if (mKeyboard->isKeyDown(OIS::KC_LSHIFT))
@@ -133,7 +127,6 @@ void InputMgr::UpdateCamera(float dt){
 	    else
 	      dirVec.x += move;
 	  }
-
 	  engine->gameMgr->cameraNode->translate(dirVec * dt, Ogre::Node::TS_LOCAL);*/
 
 	 if(mKeyboard->isKeyDown(OIS::KC_B)){
@@ -189,7 +182,6 @@ void InputMgr::UpdateCamera(float dt){
 
 void InputMgr::UpdateVelocityAndSelection(float dt){
 	/*keyboardTimer -= dt;
-
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD8)){
 		keyboardTimer = keyTime;
 		engine->entityMgr->selectedEntity->desiredSpeed += deltaDesiredSpeed;
@@ -198,8 +190,6 @@ void InputMgr::UpdateVelocityAndSelection(float dt){
 		keyboardTimer = keyTime;
 		engine->entityMgr->selectedEntity->desiredSpeed -= deltaDesiredSpeed;
 	}
-
-
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD9)){
 		keyboardTimer = keyTime;
 		if(engine->entityMgr->selectedFlyingEntity != 0){
@@ -211,8 +201,6 @@ void InputMgr::UpdateVelocityAndSelection(float dt){
 		if(engine->entityMgr->selectedFlyingEntity != 0)
 			engine->entityMgr->selectedFlyingEntity->desiredAltitude -= deltaDesiredAltitude;
 	}
-
-
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD4)){
 		keyboardTimer = keyTime;
 		engine->entityMgr->selectedEntity->desiredHeading -= deltaDesiredHeading;
@@ -223,10 +211,6 @@ void InputMgr::UpdateVelocityAndSelection(float dt){
 		engine->entityMgr->selectedEntity->desiredHeading += deltaDesiredHeading;
 	}
 	engine->entityMgr->selectedEntity->desiredHeading = FixAngle(engine->entityMgr->selectedEntity->desiredHeading);
-
-
-
-
 	//Set velocity to zero....
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_SPACE)){
 		keyboardTimer = keyTime;

@@ -25,10 +25,13 @@ public:
 	void MakeBoard();
 	void AIMove();
 	void sendShipAway();
+	void sinkAiShip();
 
 	Ogre::SceneNode *cameraNode;
 	Board * playerBoard;
 	Board * AIBoard;
+
+	int alreadySunk[5];
 
 };
 
