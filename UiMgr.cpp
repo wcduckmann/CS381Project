@@ -45,7 +45,7 @@ void UiMgr::LoadLevel(){
 
 	// Create background material
 	Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().create("Background", "General");
-	material->getTechnique(0)->getPass(0)->createTextureUnitState("rockwall.tga");
+	material->getTechnique(0)->getPass(0)->createTextureUnitState("water.bmp");
 	material->getTechnique(0)->getPass(0)->setDepthCheckEnabled(true);
 	material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(true);
 	material->getTechnique(0)->getPass(0)->setLightingEnabled(false);
