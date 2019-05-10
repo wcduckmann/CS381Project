@@ -37,6 +37,14 @@ public:
   //game specific data
   int health, size;
 
+  bool didSelectSoundPlay;
+
+  //sound
+  std::string soundFile;
+  bool playSound;
+  unsigned int auioId;
+
+
   EntityTypes entityType;
 
   std::vector<Aspect* > aspects;

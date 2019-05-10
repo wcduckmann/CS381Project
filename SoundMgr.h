@@ -64,7 +64,7 @@ namespace OgreSND {
 		//unsigned int scvId;
                 //unsigned int soundDictionary[FastEcslent::NENTITYTYPES];
                 std::vector <std::string> sourceDictionary;
-
+                
                 //First dimension holds types and inner one holds different sounds for that type
                 //int creationSoundsDictionary[FastEcslent::NENTITYTYPES][soundPerEnt];
                 int selectionSoundsDictionary[6][soundPerEnt];
@@ -76,7 +76,7 @@ namespace OgreSND {
 		//int firstIndexNotInUse(bool inUse[], int size);
 		int getEmptySourceIndex();
 		bool resetSource(ALuint sid);
-
+                
                 bool isEnabled;
 
 	public:
@@ -90,7 +90,7 @@ namespace OgreSND {
 		void tick(double dtime);
 		void releaseLevel();
 		void cleanup ();
-
+                
                 void enable();
                 void disable();
 
@@ -107,8 +107,8 @@ namespace OgreSND {
                 //bool playEntityBornSound(FastEcslent::EntityType et, OgreGFX::GFXNode *gfxNode);
                 //bool playExplosionSound(FastEcslent::EntityType et, OgreGFX::GFXNode *gfxNode);
                 //bool playExplosionSound(OgreGFX::GFXNode *gfxNode);
-                bool playSelectionSound(Entity381 et);
-
+                bool playSelectionSound(Entity381 * et);
+                
 		//specific for sound managers everywhere
 		bool loadAudio(std::string filename, int sid);
 		//bool loadAndBindAudio(std::string filename, bool loop, ALuint &audioId); //return +ive audioId or -ive error code
@@ -118,11 +118,11 @@ namespace OgreSND {
 		bool resumeBackground();
 
 		//bool registerCreate(FastEcslent::EntityType et, std::string filename);
-                bool registerSelection(Entity381 et, std::string filename);
+                bool registerSelection(Entity381 * et, std::string filename);
                 //bool registerBattleSound(FastEcslent::EntityType et, std::string filename);
                 //bool isEntityShip(FastEcslent::EntityType et);
                 bool initWatercraftSounds();
-
+                
 		bool reserveAudio(std::string filename, bool loop, unsigned int &alSourceInfoIndex);
 		bool releaseSource(ALuint audioId);
 		bool releaseSourceIndex(int sid);
@@ -133,9 +133,9 @@ namespace OgreSND {
         bool playAudio(ALuint audioId);
         bool playAudioSourceIndex(int sid, bool forceRestart );
         bool playAudioSourceIndex(int sid);
-
+        
         void copySoundState();
-
+        
         bool isAudioPlaying(ALuint audioId);
         bool stopAudio(ALuint audioID );
         bool stopAllAudio( void );
@@ -152,7 +152,7 @@ namespace OgreSND {
         bool setSoundPosition(ALuint audioID, Ogre::Vector3 position );
 
         bool setSoundDisposition(ALuint audioID, Ogre::Vector3 position, Ogre::Vector3 velocity, Ogre::Vector3 direction );
-        FileSystem=/home/emjohnson/Desktop/samba-home/Desktop/CS381/381/meshes
+
         bool setSound(ALuint audioID, Ogre::Vector3 position,
             Ogre::Vector3 velocity, Ogre::Vector3 direction, float maxDistance,
             bool playNow, bool forceRestart, float minGain );
@@ -160,9 +160,9 @@ namespace OgreSND {
         bool setListenerDisposition( Ogre::Vector3 position, Ogre::Vector3 velocity, Ogre::Quaternion orientation );
 
 	};
-
+        
         //double volume;
-
+        
 
 
 }

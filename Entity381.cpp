@@ -54,6 +54,13 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	this->desiredSpeed = this->speed = 0;
 	this->minSpeed = this->maxSpeed = 0;
 
+	this->playSound = false;
+
+	this->soundFile = "Boat-Sound.wav";
+
+	this->auioId = 0;
+
+
 }
 
 Entity381::~Entity381(){
@@ -81,7 +88,7 @@ DDG51::DDG51(Engine *engine, Ogre::Vector3 pos, int ident):
 	meshfilename = "ddg51.mesh";
 	entityType = DDG51Type;
 	this->minSpeed = 0;
-	this->maxSpeed = 16.0f;//meters per second...
+	this->maxSpeed = 32.0f;//meters per second...
 	this->acceleration = 5.0f; // fast
 	this->turnRate = 20.0f; //4 degrees per second
 	this->health = 2;
@@ -99,8 +106,8 @@ Carrier::Carrier(Engine *engine, Ogre::Vector3 pos, int ident):
 	meshfilename = "cvn68.mesh";
 	entityType = CarrierType;
 	this->minSpeed = 0;
-	this->maxSpeed = 20.0f;//meters per second...
-	this->acceleration = 1.0f; // slow
+	this->maxSpeed = 40.0f;//meters per second...
+	this->acceleration = 5.0f; // slow
 	this->turnRate = 10.0f; //2 degrees per second
 	this->health = 4;
 	this->size = 4;
@@ -116,7 +123,7 @@ SpeedBoat::SpeedBoat(Engine *engine, Ogre::Vector3 pos, int ident):
 	meshfilename = "cigarette.mesh";
 	entityType = SpeedBoatType;
 	this->minSpeed = 0;
-	this->maxSpeed = 30.0f;//meters per second...
+	this->maxSpeed = 60.0f;//meters per second...
 	this->acceleration = 5.0f; // slow
 	this->turnRate = 30.0f; //2 degrees per second
 	this->health = 1;
@@ -133,7 +140,7 @@ Frigate::Frigate(Engine *engine, Ogre::Vector3 pos, int ident):
 	meshfilename = "sleek.mesh";
 	entityType = FrigateType;
 	this->minSpeed = 0;
-	this->maxSpeed = 15.0f;//meters per second...
+	this->maxSpeed = 30.0f;//meters per second...
 	this->acceleration = 5.0f; // slow
 	this->turnRate = 20.0f; //2 degrees per second
 	this->health = 2;
@@ -150,7 +157,7 @@ Alien::Alien(Engine *engine, Ogre::Vector3 pos, int ident):
 	meshfilename = "alienship.mesh";
 	entityType = AlienType;
 	this->minSpeed = 0;
-	this->maxSpeed = 50.0f;//meters per second...
+	this->maxSpeed = 100.0f;//meters per second...
 	this->acceleration = 10.0f; // slow
 	this->turnRate = 40.0f; //2 degrees per second
 	this->health = 1;
