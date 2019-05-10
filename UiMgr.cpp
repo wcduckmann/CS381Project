@@ -64,6 +64,7 @@ void UiMgr::LoadLevel(){
 	Ogre::SceneNode* node = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode("Background");
 	node->attachObject(rect);
 
+	mTrayMgr->createLabel(OgreBites::TL_CENTER, "Title", "Welcome to Tides of War", 500);
 	mTrayMgr->createButton(OgreBites::TL_CENTER, "PlayButton", "Play!", 500);
 
 }
@@ -205,13 +206,19 @@ void UiMgr::buttonHit(OgreBites::Button *b){
     }
     else if(b->getName()=="PlayButton")
     {
-    	Ogre::StringVector spawnOptions;
-    	spawnOptions.push_back("Select SpeedBoat");
-    	spawnOptions.push_back("Select Destroyer");
-    	spawnOptions.push_back("Select Carrier");
-    	spawnOptions.push_back("Select Frigate");
-    	spawnOptions.push_back("Select Alien Ship");
-    	mTrayMgr->createLongSelectMenu(OgreBites::TL_TOPRIGHT, "MyMenu", "Select Ship", 300, 4,spawnOptions);
+
+    	spawnButton = mTrayMgr->createButton(OgreBites::TL_LEFT, "spawnDestroyer", "Spawn Destroyer");
+    	rowSlider = mTrayMgr->createThickSlider(OgreBites::TL_LEFT, "RowSlider", "Row: ", 200, 150, 1, 10, 10);
+    	colSlider = mTrayMgr->createThickSlider(OgreBites::TL_LEFT, "ColSlider", "Col: ", 200, 150, 1, 10, 10);
+
+
+    	/*Ogre::StringVector shipOptions;
+    	shipOptions.push_back("Select SpeedBoat");
+    	shipOptions.push_back("Select Destroyer");
+    	shipOptions.push_back("Select Carrier");
+    	shipOptions.push_back("Select Frigate");
+    	shipOptions.push_back("Select Alien Ship");
+    	mTrayMgr->createLongSelectMenu(OgreBites::TL_TOPRIGHT, "MyMenu", "Select Ship", 300, 5,shipOptions);*/
 
     	mTrayMgr->showBackdrop("ECSLENT/UI");
 
@@ -221,20 +228,67 @@ void UiMgr::buttonHit(OgreBites::Button *b){
     	//infoLabel2 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel2", "No Unit Selected", 250);
     	//infoLabel3 = mTrayMgr->createLabel(OgreBites::TL_RIGHT, "infoLabel3", "No Unit Selected", 250);
 
-    	mTrayMgr->createButton(OgreBites::TL_RIGHT, "FireButton", "Fire!");
+    	/*mTrayMgr->createButton(OgreBites::TL_RIGHT, "FireButton", "Fire!");
     	rowSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "RowSlider", "Row: ", 200, 150, 1, 10, 10);
-    	colSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "ColSlider", "Col: ", 200, 150, 1, 10, 10);
+    	colSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "ColSlider", "Col: ", 200, 150, 1, 10, 10);*/
 
     	infoBox = mTrayMgr->createTextBox(OgreBites::TL_BOTTOM, "Text Box", "Game Log", 500, 120);
 
-    	pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT,"HealthBar", "Health", 300, 200);
-    	pbar->setProgress(1);
+    	/*pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT,"HealthBar", "Health", 300, 200);
+    	pbar->setProgress(1);*/
 
     	clicks = 0;
 
     	engine->gfxMgr->mSceneMgr->destroySceneNode("Background");
     	delete rect;
     	mTrayMgr->destroyWidget("PlayButton");
+    	mTrayMgr->destroyWidget("Title");
+    }
+    else if(b->getCaption() == "Spawn Destroyer"){
+
+    	spawnDestroyer();
+
+    	b->setCaption("Spawn Frigate");
+    }
+    else if(b->getCaption() == "Spawn Frigate"){
+
+    	spawnFrigate();
+
+    	b->setCaption("Spawn Carrier");
+    }
+    else if(b->getCaption() == "Spawn Carrier"){
+
+    	spawnCarrier();
+
+    	b->setCaption("Spawn Speedboat");
+
+    }
+    else if(b->getCaption() == "Spawn Speedboat"){
+
+    	spawnSpeedboat();
+
+    	b->setCaption("Spawn Alien");
+    }
+    else if(b->getCaption() == "Spawn Alien"){
+
+    	spawnAlien();
+
+    	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_LEFT);
+
+       	Ogre::StringVector shipOptions;
+       	shipOptions.push_back("Select SpeedBoat");
+       	shipOptions.push_back("Select Destroyer");
+        shipOptions.push_back("Select Carrier");
+        shipOptions.push_back("Select Frigate");
+        shipOptions.push_back("Select Alien Ship");
+        mTrayMgr->createLongSelectMenu(OgreBites::TL_TOPRIGHT, "MyMenu", "Select Ship", 300, 5,shipOptions);
+
+        mTrayMgr->createButton(OgreBites::TL_RIGHT, "FireButton", "Fire!");
+        rowSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "RowSlider", "Row: ", 200, 150, 1, 10, 10);
+        colSlider = mTrayMgr->createThickSlider(OgreBites::TL_RIGHT, "ColSlider", "Col: ", 200, 150, 1, 10, 10);
+
+        pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT,"HealthBar", "Health", 300, 200);
+        pbar->setProgress(1);
     }
 }
 
@@ -274,18 +328,180 @@ void UiMgr::itemSelected(OgreBites::SelectMenu *m){
 
 }
 
-Ogre::Vector3 UiMgr::getSpawnPosition(int row, int col, bool orient, int boatSize){
+void UiMgr::spawnDestroyer(){
 
-	Ogre::Vector3 pos = Ogre::Vector3::ZERO;
+	Ogre::StringConverter converter;
 
-	//Changes user input to zero based indexing
-	int r = row - 1;
-	int c = col - 1;
+	Ogre::String rowValue = converter.toString(rowSlider->getValue());
+	Ogre::String colValue = converter.toString(colSlider->getValue());
 
-	pos.x = -400 + 100 * r;
-	pos.z = 50 + 100 * c;
+	Ogre::Vector3 dPos = Ogre::Vector3(-500, 0, -50);
 
-	return pos;
+	dPos.z = dPos.z + 100 * rowSlider->getValue();
 
+	int row = rowSlider->getValue();
+	int col = colSlider->getValue();
 
+	if((dPos.x + 100 * colSlider->getValue()) > 400 ){
+
+		dPos.x = 400;
+		col = 9;
+	}
+	else{
+
+		dPos.x = dPos.x + 100 * colSlider->getValue();
+	}
+
+	engine->entityMgr->CreateEntityOfTypeAtPosition(DDG51Type , dPos);
+
+	engine->gameMgr->playerBoard->placeDestroyer(row - 1, col - 1);
+	engine->gameMgr->AIBoard->placeDestroyer(row - 1, col - 1);
+
+	infoBox->appendText("Your destroyer has been placed at ");
+	infoBox->appendText(rowValue);
+	infoBox->appendText(" , ");
+	infoBox->appendText(colValue);
+	infoBox->appendText(". \n");
+}
+
+void UiMgr::spawnFrigate(){
+
+	Ogre::StringConverter converter;
+
+	Ogre::String rowValue = converter.toString(rowSlider->getValue());
+	Ogre::String colValue = converter.toString(colSlider->getValue());
+
+	Ogre::Vector3 fPos = Ogre::Vector3(-500, 0, -50);
+
+	fPos.z = fPos.z + 100 * rowSlider->getValue();
+
+	int row = rowSlider->getValue();
+	int col = colSlider->getValue();
+
+	if((fPos.x + 100 * colSlider->getValue()) > 400 ){
+
+		fPos.x = 400;
+		col = 9;
+	}
+	else{
+
+		fPos.x = fPos.x + 100 * colSlider->getValue();
+	}
+
+	engine->entityMgr->CreateEntityOfTypeAtPosition(FrigateType , fPos);
+
+	engine->gameMgr->playerBoard->placeFrigate(row - 1, col - 1);
+	engine->gameMgr->AIBoard->placeFrigate(row - 1, col - 1);
+
+	infoBox->appendText("Your frigate has been placed at ");
+	infoBox->appendText(rowValue);
+	infoBox->appendText(" , ");
+	infoBox->appendText(colValue);
+	infoBox->appendText(". \n");
+}
+
+void UiMgr::spawnCarrier(){
+
+	Ogre::StringConverter converter;
+
+	Ogre::String rowValue = converter.toString(rowSlider->getValue());
+	Ogre::String colValue = converter.toString(colSlider->getValue());
+
+	Ogre::Vector3 cPos = Ogre::Vector3(-400, 0, -50);
+
+	cPos.z = cPos.z + 100 * rowSlider->getValue();
+
+	int row = rowSlider->getValue();
+	int col = colSlider->getValue();
+
+	if((cPos.x + 100 * colSlider->getValue()) > 300 ){
+
+		cPos.x = 300;
+		col = 7;
+	}
+	else{
+
+		cPos.x = cPos.x + 100 * colSlider->getValue();
+	}
+
+	engine->entityMgr->CreateEntityOfTypeAtPosition(CarrierType , cPos);
+
+	engine->gameMgr->playerBoard->placeCarrier(row - 1, col - 1);
+	engine->gameMgr->AIBoard->placeCarrier(row - 1, col - 1);
+
+	infoBox->appendText("Your carrier has been placed at ");
+	infoBox->appendText(rowValue);
+	infoBox->appendText(" , ");
+	infoBox->appendText(colValue);
+	infoBox->appendText(". \n");
+}
+
+void UiMgr::spawnSpeedboat(){
+
+	Ogre::StringConverter converter;
+
+	Ogre::String rowValue = converter.toString(rowSlider->getValue());
+	Ogre::String colValue = converter.toString(colSlider->getValue());
+
+	Ogre::Vector3 sPos = Ogre::Vector3(-550, 0, -50);
+
+	sPos.z = sPos.z + 100 * rowSlider->getValue();
+
+	int row = rowSlider->getValue();
+	int col = colSlider->getValue();
+
+	if((sPos.x + 100 * colSlider->getValue()) > 450 ){
+
+		sPos.x = 450;
+	}
+	else{
+
+		sPos.x = sPos.x + 100 * colSlider->getValue();
+	}
+
+	engine->entityMgr->CreateEntityOfTypeAtPosition(SpeedBoatType , sPos);
+
+	engine->gameMgr->playerBoard->placeSpeedboat(row - 1, col - 1);
+	engine->gameMgr->AIBoard->placeSpeedboat(row- 1, col - 1);
+
+	infoBox->appendText("Your speedboat has been placed at ");
+	infoBox->appendText(rowValue);
+	infoBox->appendText(" , ");
+	infoBox->appendText(colValue);
+	infoBox->appendText(". \n");
+}
+
+void UiMgr::spawnAlien(){
+
+	Ogre::StringConverter converter;
+
+	Ogre::String rowValue = converter.toString(rowSlider->getValue());
+	Ogre::String colValue = converter.toString(colSlider->getValue());
+
+	Ogre::Vector3 aPos = Ogre::Vector3(-550, 0, -50);
+
+	aPos.z = aPos.z + 100 * rowSlider->getValue();
+
+	int row = rowSlider->getValue();
+	int col = colSlider->getValue();
+
+	if((aPos.x + 100 * colSlider->getValue()) > 450 ){
+
+		aPos.x = 450;
+	}
+	else{
+
+		aPos.x = aPos.x + 100 * colSlider->getValue();
+	}
+
+	engine->entityMgr->CreateEntityOfTypeAtPosition(AlienType , aPos);
+
+	engine->gameMgr->playerBoard->placeAlien(row - 1, col - 1);
+	engine->gameMgr->AIBoard->placeAlien(row - 1, col - 1);
+
+	infoBox->appendText("Your alien ship has been placed at ");
+	infoBox->appendText(rowValue);
+	infoBox->appendText(" , ");
+	infoBox->appendText(colValue);
+	infoBox->appendText(". \n");
 }

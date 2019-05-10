@@ -35,7 +35,13 @@ protected:
 
     void buttonHit(OgreBites::Button *b);
     void itemSelected(OgreBites::SelectMenu *m);
-    Ogre::Vector3 getSpawnPosition(int row, int col, bool orient, int boatSize);
+
+    void spawnDestroyer();
+    void spawnFrigate();
+    void spawnAlien();
+    void spawnSpeedboat();
+    void spawnCarrier();
+
 
 public:
 
@@ -59,6 +65,7 @@ public:
 	Ogre::Rectangle2D *rect;
 
 	OgreBites::ProgressBar * pbar;
+	OgreBites::Button* spawnButton;
 
 	int clicks;
 };

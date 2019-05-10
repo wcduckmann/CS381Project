@@ -72,7 +72,7 @@ void GameMgr::LoadLevel(){
 
 	  std::srand(std::time(NULL));
 	  MakeBoard();
-	  MakeEntities();
+	  //MakeEntities();
 }
 
 void GameMgr::MakeEntities(){
