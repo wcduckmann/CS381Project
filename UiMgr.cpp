@@ -192,10 +192,27 @@ void UiMgr::buttonHit(OgreBites::Button *b){
         if(gameLost){
         	infoBox->appendText("You Lose! Game over. \n");
         	infoBox->appendText("Tides of War was made by Andrew Cooper, Erik Johnson, and Will Duckhorn.\n");
+
+        	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_TOPLEFT);
+        	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_TOPRIGHT);
+        	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_RIGHT);
+        	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_BOTTOM);
+
+        	mTrayMgr->createLabel(OgreBites::TL_CENTER, "LoseScreen", "Better luck next time!", 500);
+        	mTrayMgr->createLabel(OgreBites::TL_CENTER, "VisCredits", "Andrew Cooper - Visuals", 500);
+        	mTrayMgr->createLabel(OgreBites::TL_CENTER, "UICredits", "Erik Johnson - UI", 500);
+            mTrayMgr->createLabel(OgreBites::TL_CENTER, "GameCredits", "Will Duckhorn - Gameplay", 500);
+        	mTrayMgr->createButton(OgreBites::TL_CENTER, "QuitButton", "Quit", 500);
         }
         else if(gameWon){
         	infoBox->appendText("You win! Game over. \n");
         	infoBox->appendText("Tides of War was made by Andrew Cooper, Erik Johnson, and Will Duckhorn.\n");
+
+        	mTrayMgr->createLabel(OgreBites::TL_CENTER, "WinScreen", "Congratulations, you win!", 500);
+        	mTrayMgr->createLabel(OgreBites::TL_CENTER, "VisCredits", "Andrew Cooper - Visuals", 500);
+        	mTrayMgr->createLabel(OgreBites::TL_CENTER, "UICredits", "Erik Johnson - UI", 500);
+        	mTrayMgr->createLabel(OgreBites::TL_CENTER, "GameCredits", "Will Duckhorn - Gameplay", 500);
+        	mTrayMgr->createButton(OgreBites::TL_CENTER, "QuitButton", "Quit", 500);
         }
 
         clicks++;
@@ -208,8 +225,8 @@ void UiMgr::buttonHit(OgreBites::Button *b){
     {
 
     	spawnButton = mTrayMgr->createButton(OgreBites::TL_LEFT, "spawnDestroyer", "Spawn Destroyer");
-    	rowSlider = mTrayMgr->createThickSlider(OgreBites::TL_LEFT, "RowSlider", "Row: ", 200, 150, 1, 10, 10);
-    	colSlider = mTrayMgr->createThickSlider(OgreBites::TL_LEFT, "ColSlider", "Col: ", 200, 150, 1, 10, 10);
+    	rowSlider = mTrayMgr->createThickSlider(OgreBites::TL_LEFT, "SpawnRowSlider", "Row: ", 200, 150, 1, 10, 10);
+    	colSlider = mTrayMgr->createThickSlider(OgreBites::TL_LEFT, "SpawnColSlider", "Col: ", 200, 150, 1, 10, 10);
 
 
     	/*Ogre::StringVector shipOptions;
@@ -241,8 +258,11 @@ void UiMgr::buttonHit(OgreBites::Button *b){
 
     	engine->gfxMgr->mSceneMgr->destroySceneNode("Background");
     	delete rect;
-    	mTrayMgr->destroyWidget("PlayButton");
-    	mTrayMgr->destroyWidget("Title");
+    	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_CENTER);
+    }
+    else if(b->getName() == "QuitButton"){
+
+    	engine->keepRunning = false;
     }
     else if(b->getCaption() == "Spawn Destroyer"){
 
@@ -262,12 +282,16 @@ void UiMgr::buttonHit(OgreBites::Button *b){
 
     	b->setCaption("Spawn Speedboat");
 
+    	infoBox->setScrollPercentage(100);
+
     }
     else if(b->getCaption() == "Spawn Speedboat"){
 
     	spawnSpeedboat();
 
     	b->setCaption("Spawn Alien");
+
+
     }
     else if(b->getCaption() == "Spawn Alien"){
 
@@ -289,6 +313,8 @@ void UiMgr::buttonHit(OgreBites::Button *b){
 
         pbar = mTrayMgr->createProgressBar(OgreBites::TL_TOPLEFT,"HealthBar", "Health", 300, 200);
         pbar->setProgress(1);
+
+        infoBox->setScrollPercentage(100);
     }
 }
 
