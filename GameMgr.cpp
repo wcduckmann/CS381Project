@@ -166,13 +166,14 @@ void GameMgr::MakeBoard(){
 void GameMgr::AIMove(){
 
 	sinkAiShip();
-
-	int row = 1 + std::rand() % 10;
-	int col = 1 + std::rand() % 10;
-
+	bool legalMove = false;
+	int row, col;
+	while(!legalMove){
+		row = 1 + std::rand() % 10;
+		col = 1 + std::rand() % 10;
+		legalMove = playerBoard->isShotLegal(row, col);
+	}
 	Ogre::StringConverter converter;
-
-
 
 	Ogre::String rowValue = converter.toString(row);
 	Ogre::String colValue = converter.toString(col);
@@ -201,19 +202,19 @@ void GameMgr::sendShipAway(){
 	}
 
 	if(playerBoard->speedboatHealth == 0){
-		MoveTo * move = new MoveTo(engine->entityMgr->entities[2], goAway);
+		MoveTo * move = new MoveTo(engine->entityMgr->entities[3], goAway);
 		engine->entityMgr->entities[2]->aspects[2]->AddCommand(move);
 
 	}
 
 	if(playerBoard->frigateHealth == 0){
-		MoveTo * move = new MoveTo(engine->entityMgr->entities[3], goAway);
+		MoveTo * move = new MoveTo(engine->entityMgr->entities[1], goAway);
 		engine->entityMgr->entities[3]->aspects[2]->AddCommand(move);
 
 	}
 
 	if(playerBoard->carrierHealth == 0){
-		MoveTo * move = new MoveTo(engine->entityMgr->entities[1], goAway);
+		MoveTo * move = new MoveTo(engine->entityMgr->entities[2], goAway);
 		engine->entityMgr->entities[1]->aspects[2]->AddCommand(move);
 
 	}
