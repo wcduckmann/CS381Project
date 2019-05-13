@@ -67,6 +67,8 @@ void UiMgr::LoadLevel(){
 	mTrayMgr->createLabel(OgreBites::TL_CENTER, "Title", "Welcome to Tides of War", 500);
 	mTrayMgr->createButton(OgreBites::TL_CENTER, "PlayButton", "Play!", 500);
 
+	mTrayMgr->createLabel(OgreBites::TL_TOP, "Instructions", "How to Play: Use the sliders to select coordinates", 500);
+
 }
 
 void UiMgr::Tick(float dt){
@@ -213,6 +215,11 @@ void UiMgr::buttonHit(OgreBites::Button *b){
         	mTrayMgr->createLabel(OgreBites::TL_CENTER, "UICredits", "Erik Johnson - UI", 500);
         	mTrayMgr->createLabel(OgreBites::TL_CENTER, "GameCredits", "Will Duckhorn - Gameplay", 500);
         	mTrayMgr->createButton(OgreBites::TL_CENTER, "QuitButton", "Quit", 500);
+
+        	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_LEFT);
+        	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_RIGHT);
+        	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_TOPLEFT);
+        	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_TOPRIGHT);
         }
 
         clicks++;
@@ -259,6 +266,7 @@ void UiMgr::buttonHit(OgreBites::Button *b){
     	engine->gfxMgr->mSceneMgr->destroySceneNode("Background");
     	delete rect;
     	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_CENTER);
+    	mTrayMgr->destroyAllWidgetsInTray(OgreBites::TL_TOP);
     }
     else if(b->getName() == "QuitButton"){
 
